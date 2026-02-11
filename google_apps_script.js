@@ -1,0 +1,56 @@
+function doGet(e) {
+    // If no parameters, return all data
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const data = sheet.getDataRange().getValues();
+
+    // Headers are first row
+    if (data.length <= 1) {
+        return ContentService.createTextOutput(JSON.stringify([]))
+            .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    const headers = data[0];
+    const items = data.slice(1).map(row => {
+        let item = {};
+        headers.forEach((header, index) => {
+            item[header] = row[index];
+        });
+        return item;
+    });
+
+    return ContentService.createTextOutput(JSON.stringify(items))
+        .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+    try {
+        const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+        const payload = JSON.parse(e.postData.contents);
+        const items = payload.items || payload; // robust handling
+
+        // Clear existing content
+        sheet.clearContents();
+
+        if (items.length === 0) {
+            return ContentService.createTextOutput(JSON.stringify({ status: 'success', message: 'Cleared' }))
+                .setMimeType(ContentService.MimeType.JSON);
+        }
+
+        // Define specific headers
+        const headers = ['id', 'name', 'value', 'rate', 'type', 'category', 'date'];
+
+        // Prepare rows
+        const rows = items.map(item => headers.map(h => item[h]));
+
+        // Write headers and data
+        sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+        sheet.getRange(2, 1, rows.length, headers.length).setValues(rows);
+
+        return ContentService.createTextOutput(JSON.stringify({ status: 'success', count: items.length }))
+            .setMimeType(ContentService.MimeType.JSON);
+
+    } catch (error) {
+        return ContentService.createTextOutput(JSON.stringify({ status: 'error', message: error.toString() }))
+            .setMimeType(ContentService.MimeType.JSON);
+    }
+}
