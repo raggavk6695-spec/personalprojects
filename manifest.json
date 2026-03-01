@@ -1,0 +1,21 @@
+{
+    "name": "Wealth Monitor",
+    "short_name": "WealthVault",
+    "description": "Wealth Monitor App",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#FDFBF7",
+    "theme_color": "#FDFBF7",
+    "icons": [
+        {
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%230F172A'/%3E%3Ctext x='50%25' y='50%25' font-size='80' fill='white' font-family='sans-serif' text-anchor='middle' dominant-baseline='central'%3EW%3C/text%3E%3C/svg%3E",
+            "sizes": "192x192",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230F172A'/%3E%3Ctext x='50%25' y='50%25' font-size='200' fill='white' font-family='sans-serif' text-anchor='middle' dominant-baseline='central'%3EW%3C/text%3E%3C/svg%3E",
+            "sizes": "512x512",
+            "type": "image/svg+xml"
+        }
+    ]
+}
