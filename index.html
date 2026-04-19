@@ -19,29 +19,197 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            /* Luxury Light Theme Palette */
-            --bg-color: #FDFBF7;
-            /* Creamy White */
-            --card-bg: #FFFFFF;
-            --text-primary: #1C1917;
-            /* Warm Charcoal */
-            --text-secondary: #57534E;
-            /* Stone Gray */
-            --accent-primary: #0F172A;
-            /* Deep Navy */
-            --accent-secondary: #B45309;
-            /* Burnished Gold */
-            --accent-green: #059669;
-            /* Emerald */
-            --accent-red: #DC2626;
-            /* Deep Red */
-            --accent-blue: #0F172A;
-            /* Navy (replacing bright blue) */
-            --border-color: #E7E5E4;
-            /* Warm Light Gray */
-            --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.02);
+        :root,
+        [data-theme="default"] {
+            /* Minimalist Dark Theme Palette */
+            --bg-color: #0B0F19;
+            --card-bg: #111827;
+            --text-primary: #F3F4F6;
+            --text-secondary: #9CA3AF;
+            --accent-primary: #38BDF8;
+            --accent-secondary: #FBBF24;
+            --accent-green: #10B981;
+            --accent-red: #EF4444;
+            --accent-blue: #3B82F6;
+            --border-color: #1F2937;
+            --glass-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), 0 10px 15px -3px rgba(0, 0, 0, 0.2);
             --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --input-bg: #1F2937;
+            --input-focus-bg: #111827;
+            --btn-primary-text: #0B0F19;
+            --item-bg: #1F2937;
+            --item-hover-bg: #374151;
+        }
+
+        [data-theme="light-minimalist"] {
+            --bg-color: #F8FAFC;
+            --card-bg: #FFFFFF;
+            --text-primary: #0F172A;
+            --text-secondary: #64748B;
+            --accent-primary: #0284C7;
+            --accent-secondary: #D97706;
+            --accent-green: #059669;
+            --accent-red: #DC2626;
+            --accent-blue: #2563EB;
+            --border-color: #E2E8F0;
+            --glass-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --input-bg: #F1F5F9;
+            --input-focus-bg: #FFFFFF;
+            --btn-primary-text: #FFFFFF;
+            --item-bg: #FFFFFF;
+            --item-hover-bg: #F1F5F9;
+        }
+
+        [data-theme="midnight-purple"] {
+            --bg-color: #0d021c;
+            --card-bg: #1a0a30;
+            --text-primary: #F3F4F6;
+            --text-secondary: #a395c4;
+            --accent-primary: #d946ef;
+            --accent-secondary: #06b6d4;
+            --accent-green: #10B981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --border-color: #2e1654;
+            --glass-shadow: 0 4px 20px -2px rgba(217, 70, 239, 0.2);
+            --input-bg: #220d40;
+            --input-focus-bg: #1a0a30;
+            --btn-primary-text: #FFFFFF;
+            --item-bg: #220d40;
+            --item-hover-bg: #2e1654;
+        }
+
+        [data-theme="forest-glow"] {
+            --bg-color: #061c16;
+            --card-bg: #0b2b22;
+            --text-primary: #ecfdf5;
+            --text-secondary: #6ee7b7;
+            --accent-primary: #10b981;
+            --accent-secondary: #fcd34d;
+            --accent-green: #34d399;
+            --accent-red: #f87171;
+            --accent-blue: #60a5fa;
+            --border-color: #134e40;
+            --glass-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.15);
+            --input-bg: #134e40;
+            --input-focus-bg: #0b2b22;
+            --btn-primary-text: #061c16;
+            --item-bg: #134e40;
+            --item-hover-bg: #0f614e;
+        }
+
+        [data-theme="sunset-dark"] {
+            --bg-color: #1e110a;
+            --card-bg: #2f1911;
+            --text-primary: #fff7ed;
+            --text-secondary: #fdba74;
+            --accent-primary: #f97316;
+            --accent-secondary: #fbbf24;
+            --accent-green: #34d399;
+            --accent-red: #ef4444;
+            --accent-blue: #60a5fa;
+            --border-color: #431f12;
+            --glass-shadow: 0 4px 20px -2px rgba(249, 115, 22, 0.15);
+            --input-bg: #431f12;
+            --input-focus-bg: #2f1911;
+            --btn-primary-text: #1e110a;
+            --item-bg: #431f12;
+            --item-hover-bg: #5a2817;
+        }
+
+        [data-theme="ocean-blue"] {
+            --bg-color: #020b1e;
+            --card-bg: #0a1f3d;
+            --text-primary: #f0f9ff;
+            --text-secondary: #7dd3fc;
+            --accent-primary: #06b6d4;
+            --accent-secondary: #38bdf8;
+            --accent-green: #10b981;
+            --accent-red: #f43f5e;
+            --accent-blue: #60a5fa;
+            --border-color: #173860;
+            --glass-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.15);
+            --input-bg: #173860;
+            --input-focus-bg: #0a1f3d;
+            --btn-primary-text: #020b1e;
+            --item-bg: #173860;
+            --item-hover-bg: #1c4a80;
+        }
+
+        [data-theme="nordic-frost"] {
+            --bg-color: #e5e7eb;
+            --card-bg: #f9fafb;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --accent-primary: #2563eb;
+            --accent-secondary: #0891b2;
+            --accent-green: #059669;
+            --accent-red: #dc2626;
+            --accent-blue: #2563eb;
+            --border-color: #d1d5db;
+            --glass-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --input-bg: #ffffff;
+            --input-focus-bg: #f9fafb;
+            --btn-primary-text: #ffffff;
+            --item-bg: #ffffff;
+            --item-hover-bg: #f3f4f6;
+        }
+
+        [data-theme="cyberpunk"] {
+            --bg-color: #050505;
+            --card-bg: #121212;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-primary: #ff00ff;
+            --accent-secondary: #00ffff;
+            --accent-green: #39ff14;
+            --accent-red: #ff003c;
+            --accent-blue: #00ffff;
+            --border-color: #333333;
+            --glass-shadow: 0 4px 20px -2px rgba(255, 0, 255, 0.2);
+            --input-bg: #1f1f1f;
+            --input-focus-bg: #121212;
+            --btn-primary-text: #000000;
+            --item-bg: #1f1f1f;
+            --item-hover-bg: #2a2a2a;
+        }
+
+        [data-theme="coffee-sepia"] {
+            --bg-color: #f4ecd8;
+            --card-bg: #fffbf0;
+            --text-primary: #4a3b32;
+            --text-secondary: #7a6652;
+            --accent-primary: #b5651d;
+            --accent-secondary: #c24b2a;
+            --accent-green: #4b8b3b;
+            --accent-red: #b22222;
+            --accent-blue: #3b5998;
+            --border-color: #d8caba;
+            --glass-shadow: 0 4px 6px -1px rgba(74, 59, 50, 0.1);
+            --input-bg: #faeedf;
+            --input-focus-bg: #fffbf0;
+            --btn-primary-text: #fff;
+            --item-bg: #faeedf;
+            --item-hover-bg: #eddec5;
+        }
+
+        [data-theme="mint-breeze"] {
+            --bg-color: #eafcf4;
+            --card-bg: #ffffff;
+            --text-primary: #064e3b;
+            --text-secondary: #059669;
+            --accent-primary: #10b981;
+            --accent-secondary: #3b82f6;
+            --accent-green: #059669;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --border-color: #a7f3d0;
+            --glass-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.1);
+            --input-bg: #f0fdf4;
+            --input-focus-bg: #ffffff;
+            --btn-primary-text: #ffffff;
+            --item-bg: #f0fdf4;
+            --item-hover-bg: #d1fae5;
         }
 
         * {
@@ -56,11 +224,9 @@
             color: var(--text-primary);
             min-height: 100vh;
             padding: 1rem;
-            /* Reduced padding for mobile */
-            /* Subtle texture or very soft gradient */
             background-image:
-                radial-gradient(at 0% 0%, rgba(180, 83, 9, 0.03) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.03) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, color-mix(in srgb, var(--accent-primary) 5%, transparent) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, color-mix(in srgb, var(--accent-secondary) 5%, transparent) 0px, transparent 50%);
         }
 
         .container {
@@ -73,7 +239,6 @@
             margin-bottom: 2rem;
             display: flex;
             flex-direction: column;
-            /* Stack on mobile */
             gap: 1rem;
             align-items: flex-start;
         }
@@ -110,7 +275,7 @@
 
         @media (min-width: 768px) {
             .dashboard {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(4, 1fr);
                 gap: 1.5rem;
             }
         }
@@ -119,7 +284,6 @@
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 1rem;
-            /* 16px */
             padding: 1.25rem;
             box-shadow: var(--glass-shadow);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -199,10 +363,8 @@
         }
 
         @media (min-width: 1024px) {
-
-            /* Original layout for desktop form if preferred, or keep grid */
             .form-grid {
-                grid-template-columns: 2fr 1fr 1fr 1fr 2fr auto;
+                grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr auto;
                 align-items: end;
             }
 
@@ -228,8 +390,7 @@
         input,
         select {
             width: 100%;
-            background: #F8FAFC;
-            /* Very light cool gray */
+            background: var(--input-bg);
             border: 1px solid var(--border-color);
             padding: 0.75rem 1rem;
             border-radius: 0.5rem;
@@ -242,9 +403,8 @@
         input:focus,
         select:focus {
             border-color: var(--accent-secondary);
-            /* Gold focus */
-            background: #FFFFFF;
-            box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.1);
+            background: var(--input-focus-bg);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-secondary) 15%, transparent);
         }
 
         .btn {
@@ -263,13 +423,11 @@
 
         .btn-primary {
             background: var(--accent-primary);
-            /* Navy */
-            color: white;
+            color: var(--btn-primary-text);
         }
 
         .btn-primary:hover {
-            background: #1e293b;
-            /* Lighter Navy */
+            filter: brightness(1.1);
             transform: translateY(-1px);
         }
 
@@ -284,8 +442,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem;
-            background: #FAFAF9;
-            /* Warm gray bg for items */
+            background: var(--item-bg);
             margin-bottom: 0.75rem;
             border-radius: 0.75rem;
             border: 1px solid transparent;
@@ -293,7 +450,7 @@
         }
 
         .item:hover {
-            background: #F3F4F6;
+            background: var(--item-hover-bg);
         }
 
         .item.asset {
@@ -308,6 +465,10 @@
             font-size: 0.95rem;
             color: var(--text-primary);
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .item-actions {
@@ -329,7 +490,7 @@
 
         .btn-icon:hover {
             color: var(--accent-primary);
-            background: rgba(0, 0, 0, 0.05);
+            background: color-mix(in srgb, var(--text-primary) 10%, transparent);
         }
 
         .btn-delete:hover {
@@ -380,7 +541,7 @@
     <div class="container animate-in">
         <header>
             <h1>WealthVault</h1>
-            <div style="display:flex; gap:0.5rem;">
+            <div style="display:flex; gap:0.5rem; flex-wrap: wrap;">
                 <button onclick="app.openSettings()"
                     style="background:transparent; border:1px solid var(--border-color); color:var(--text-secondary); padding:0.5rem 1rem; border-radius:0.5rem; cursor:pointer;"
                     title="Settings">⚙️</button>
@@ -399,10 +560,28 @@
             <div class="card"
                 style="width:90%; max-width:500px; background:var(--bg-color); border:1px solid var(--border-color);">
                 <div class="panel-header">
-                    <h3>Data Sync</h3>
+                    <h3>Settings</h3>
                     <button onclick="app.closeSettings()"
                         style="background:transparent; border:none; color:var(--text-secondary); font-size:1.5rem; cursor:pointer;">&times;</button>
                 </div>
+
+                <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Theme</h4>
+                <div class="input-group" style="margin-bottom: 1.5rem;">
+                    <select id="theme-selector" onchange="app.changeTheme(this.value)">
+                        <option value="default">Default Dark</option>
+                        <option value="light-minimalist">Light Minimalist</option>
+                        <option value="midnight-purple">Midnight Purple</option>
+                        <option value="forest-glow">Forest Glow</option>
+                        <option value="sunset-dark">Sunset Dark</option>
+                        <option value="ocean-blue">Ocean Blue</option>
+                        <option value="nordic-frost">Nordic Frost</option>
+                        <option value="cyberpunk">Cyberpunk</option>
+                        <option value="coffee-sepia">Coffee & Sepia</option>
+                        <option value="mint-breeze">Mint Breeze</option>
+                    </select>
+                </div>
+
+                <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Data Sync</h4>
                 <p style="margin-bottom:1rem; color:var(--text-secondary); font-size:0.9rem;">
                     Sync your data with the connected Google Sheet.
                 </p>
@@ -425,6 +604,13 @@
             <div class="card">
                 <div class="metric-label">Total Liabilities</div>
                 <div class="metric-value liabilities-val" id="display-liabilities">$0.00</div>
+            </div>
+            <div class="card">
+                <div class="metric-label">Liquid Net Worth</div>
+                <div class="metric-value" id="display-liquid-nw" style="color: var(--accent-blue);">$0.00</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                    Liquidity Ratio: <span id="display-liquidity">0%</span>
+                </div>
             </div>
         </div>
 
@@ -471,7 +657,7 @@
                         <input type="text" id="input-name" placeholder="e.g., Home, Tesla Stock" required>
                     </div>
                     <div class="input-group">
-                        <label class="input-label" for="input-value">Value</label>
+                        <label class="input-label" for="input-value">Total Value</label>
                         <input type="number" id="input-value" placeholder="0.00" min="0" step="0.01" required>
                     </div>
                     <div class="input-group">
@@ -504,9 +690,20 @@
                             <option value="Other">Other</option>
                         </select>
                     </div>
-                    <div style="display:flex; gap:0.5rem; padding-bottom: 0.1rem; align-items: flex-end;">
-                        <button type="submit" id="btn-submit" class="btn btn-primary" style="width: 100%;">Add
-                            Item</button>
+
+                    <div class="input-group">
+                        <label class="input-label" for="input-liquid-percent">% Liquid</label>
+                        <input type="number" id="input-liquid-percent" placeholder="100" min="0" max="100" step="0.01"
+                            value="100">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label" for="input-liquid-absolute">Absolute Liquid</label>
+                        <input type="number" id="input-liquid-absolute" placeholder="0.00" min="0" step="0.01">
+                    </div>
+
+                    <div
+                        style="display:flex; gap:0.5rem; padding-bottom: 0.1rem; align-items: flex-end; grid-column: 1 / -1;">
+                        <button type="submit" id="btn-submit" class="btn btn-primary" style="flex: 1;">Add Item</button>
                         <button type="button" id="btn-cancel" class="btn"
                             style="width: 100px; background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); display: none;">Cancel</button>
                     </div>
@@ -517,19 +714,54 @@
                 </ul>
             </div>
 
-            <!-- Side Panel: Visuals -->
-            <div class="card">
-                <div class="panel-header">
-                    <h3>Allocation</h3>
+            <!-- Right Column -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <!-- Side Panel: Visuals -->
+                <div class="card">
+                    <div class="panel-header">
+                        <h3>Allocation</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="wealthChart"></canvas>
+                    </div>
+                    <div style="margin-top: 2rem;">
+                        <h4 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">INSIGHTS
+                        </h4>
+                        <p id="insight-text" style="font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary);">
+                            Add items to see your wealth distribution.
+                        </p>
+                    </div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="wealthChart"></canvas>
-                </div>
-                <div style="margin-top: 2rem;">
-                    <h4 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">INSIGHTS</h4>
-                    <p id="insight-text" style="font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary);">
-                        Add items to see your wealth distribution.
-                    </p>
+
+                <!-- Feature: Target Allocation -->
+                <div class="card">
+                    <div class="panel-header">
+                        <h3>Target Rebalancing</h3>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
+                        <div class="input-group">
+                            <label class="input-label">Equity %</label>
+                            <input type="number" id="target-equity" value="60" min="0" max="100">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Debt %</label>
+                            <input type="number" id="target-debt" value="30" min="0" max="100">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Gold %</label>
+                            <input type="number" id="target-gold" value="10" min="0" max="100">
+                        </div>
+                    </div>
+                    <button id="btn-rebalance" class="btn btn-primary" onclick="app.calculateRebalancing()">Analyze
+                        Rebalancing</button>
+                    <div style="margin-top: 1.5rem;">
+                        <h4 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">ACTION PLAN
+                        </h4>
+                        <div id="rebalance-text"
+                            style="font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary);">
+                            Set target allocations (total 100%) and analyze.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -539,8 +771,7 @@
         class WealthApp {
             constructor() {
                 this.items = JSON.parse(localStorage.getItem('wealth_items')) || [];
-                // Hardcoded URL as per user request
-                this.scriptURL = 'https://script.google.com/macros/s/AKfycbwvNwUfR4UedBaR1aJeGDQrlMh0E8fUlLjoi8OqVKRFkJ2W14UU4XDzze7c_b2LwsvvWg/exec';
+                this.scriptURL = 'https://script.google.com/macros/s/AKfycbzw7XK21XKBCFZomHrMUju0jW3BStNUUrpdkzkXmiejlu3qR7_CV_XYTCaJGIWitjjOdQ/exec';
                 this.editingId = null;
                 this.chart = null;
                 this.currencyFormatter = new Intl.NumberFormat('en-IN', {
@@ -548,18 +779,54 @@
                     currency: 'INR',
                     maximumFractionDigits: 0
                 });
+                this.theme = localStorage.getItem('wealth_theme') || 'default';
+                this.applyTheme(this.theme);
                 this.init();
             }
 
+            applyTheme(themeValue) {
+                document.documentElement.setAttribute('data-theme', themeValue);
+                setTimeout(() => {
+                    const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--bg-color').trim();
+                    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+                    if (metaThemeColor && bgColor) {
+                        metaThemeColor.setAttribute("content", bgColor);
+                    }
+                }, 10);
+            }
+
+            changeTheme(themeValue) {
+                this.theme = themeValue;
+                localStorage.setItem('wealth_theme', themeValue);
+                this.applyTheme(themeValue);
+                setTimeout(() => {
+                    this.render(); // Re-render charts with new theme colors
+                }, 50);
+            }
+
             init() {
+                this.migrateLegacyData(); // Updates old "isLocked" logic to new %liquid logic seamlessly
                 this.cacheDOM();
+                if (this.dom.themeSelector) this.dom.themeSelector.value = this.theme;
                 this.bindEvents();
                 this.render();
 
-                // Initial Sync if URL exists
                 if (this.scriptURL) {
                     this.pullFromSheet();
                 }
+            }
+
+            migrateLegacyData() {
+                let migrated = false;
+                this.items.forEach(item => {
+                    if (item.percentLiquid === undefined || item.absoluteLiquid === undefined) {
+                        item.percentLiquid = item.isLocked ? 0 : 100;
+                        item.absoluteLiquid = item.isLocked ? 0 : (item.value || 0);
+                        delete item.isLocked; // Clean up old structure
+                        migrated = true;
+                    }
+                });
+                if (migrated) this.save(true);
             }
 
             cacheDOM() {
@@ -570,19 +837,27 @@
                     rateInput: document.getElementById('input-rate'),
                     typeInput: document.getElementById('input-type'),
                     categoryInput: document.getElementById('input-category'),
+                    liquidPercentInput: document.getElementById('input-liquid-percent'),
+                    liquidAbsoluteInput: document.getElementById('input-liquid-absolute'),
                     submitBtn: document.getElementById('btn-submit'),
                     cancelBtn: document.getElementById('btn-cancel'),
                     list: document.getElementById('items-list'),
                     netWorth: document.getElementById('display-net-worth'),
                     assets: document.getElementById('display-assets'),
                     liabilities: document.getElementById('display-liabilities'),
+                    liquidNwDisplay: document.getElementById('display-liquid-nw'),
+                    liquidity: document.getElementById('display-liquidity'),
                     chartCanvas: document.getElementById('wealthChart'),
                     insightText: document.getElementById('insight-text'),
                     projChartCanvas: document.getElementById('projectionChart'),
                     projTableBody: document.getElementById('projection-table-body'),
-                    // Settings
+                    targetEquity: document.getElementById('target-equity'),
+                    targetDebt: document.getElementById('target-debt'),
+                    targetGold: document.getElementById('target-gold'),
+                    rebalanceText: document.getElementById('rebalance-text'),
                     settingsModal: document.getElementById('settings-modal'),
-                    syncStatus: document.getElementById('sync-status')
+                    syncStatus: document.getElementById('sync-status'),
+                    themeSelector: document.getElementById('theme-selector')
                 };
             }
 
@@ -595,9 +870,29 @@
                 this.dom.cancelBtn.addEventListener('click', () => {
                     this.cancelEdit();
                 });
+
+                // Sync liquid % and absolute value fields
+                this.dom.valueInput.addEventListener('input', () => this.syncLiquidity('value'));
+                this.dom.liquidPercentInput.addEventListener('input', () => this.syncLiquidity('percent'));
+                this.dom.liquidAbsoluteInput.addEventListener('input', () => this.syncLiquidity('absolute'));
             }
 
-            // --- Settings & Sync ---
+            syncLiquidity(source) {
+                const val = parseFloat(this.dom.valueInput.value) || 0;
+
+                if (source === 'value' || source === 'percent') {
+                    let pct = parseFloat(this.dom.liquidPercentInput.value);
+                    if (isNaN(pct)) pct = 100;
+                    this.dom.liquidAbsoluteInput.value = ((val * pct) / 100).toFixed(2);
+                } else if (source === 'absolute') {
+                    const abs = parseFloat(this.dom.liquidAbsoluteInput.value) || 0;
+                    if (val > 0) {
+                        this.dom.liquidPercentInput.value = ((abs / val) * 100).toFixed(2);
+                    } else {
+                        this.dom.liquidPercentInput.value = 100;
+                    }
+                }
+            }
 
             openSettings() {
                 this.dom.settingsModal.style.display = 'flex';
@@ -626,15 +921,10 @@
                     const res = await fetch(this.scriptURL);
                     const data = await res.json();
                     if (Array.isArray(data) && data.length > 0) {
-                        // Merge or Overwrite? For simplicity, we'll overwrite local if cloud has data
-                        // In a real app, we'd do conflict resolution.
-                        // Here, we assume Cloud is source of truth if connected.
-                        // However, to be safe, let's only overwrite if local is empty OR user explicitly requested sync
-                        // For now, let's just overwrite local with cloud data to ensure "Live DB" feel
                         this.items = data;
-                        this.save(true); // Save to local but skip push to avoid loop
+                        this.migrateLegacyData(); // In case sheet has old data
+                        this.save(true);
                         this.render();
-                        console.log('Pulled from sheet:', data.length, 'items');
                     }
                 } catch (e) {
                     console.error('Pull failed', e);
@@ -645,18 +935,14 @@
             async pushToSheet() {
                 if (!this.scriptURL) return;
                 try {
-                    // Send as text/plain to avoid CORS preflight issues with GAS
                     await fetch(this.scriptURL, {
                         method: 'POST',
                         body: JSON.stringify({ items: this.items })
                     });
-                    console.log('Pushed to sheet');
                 } catch (e) {
                     console.error('Push failed', e);
                 }
             }
-
-            // --- Item Management ---
 
             saveItem() {
                 const name = this.dom.nameInput.value;
@@ -664,36 +950,30 @@
                 const rate = parseFloat(this.dom.rateInput.value) || 0;
                 const type = this.dom.typeInput.value;
                 const category = this.dom.categoryInput.value;
+                const percentLiquid = parseFloat(this.dom.liquidPercentInput.value) || 0;
+                const absoluteLiquid = parseFloat(this.dom.liquidAbsoluteInput.value) || 0;
 
                 if (name && !isNaN(value)) {
                     if (this.editingId) {
-                        // Update existing item
                         const index = this.items.findIndex(item => item.id === this.editingId);
                         if (index !== -1) {
                             this.items[index] = {
                                 ...this.items[index],
-                                name,
-                                value,
-                                rate,
-                                type,
-                                category,
+                                name, value, rate, type, category, percentLiquid, absoluteLiquid,
                                 date: new Date().toISOString()
                             };
                         }
-                        this.cancelEdit(); // Reset form and mode
+                        this.cancelEdit();
                     } else {
-                        // Add new item
                         const item = {
                             id: Date.now(),
-                            name,
-                            value,
-                            rate,
-                            type,
-                            category,
+                            name, value, rate, type, category, percentLiquid, absoluteLiquid,
                             date: new Date().toISOString()
                         };
                         this.items.push(item);
                         this.dom.form.reset();
+                        this.dom.liquidPercentInput.value = 100;
+                        this.dom.liquidAbsoluteInput.value = '';
                     }
 
                     this.save();
@@ -710,6 +990,8 @@
                     this.dom.rateInput.value = item.rate || '';
                     this.dom.typeInput.value = item.type;
                     this.dom.categoryInput.value = item.category;
+                    this.dom.liquidPercentInput.value = item.percentLiquid !== undefined ? item.percentLiquid : 100;
+                    this.dom.liquidAbsoluteInput.value = item.absoluteLiquid !== undefined ? item.absoluteLiquid : item.value;
 
                     this.dom.submitBtn.textContent = 'Update';
                     this.dom.cancelBtn.style.display = 'inline-block';
@@ -720,7 +1002,9 @@
             cancelEdit() {
                 this.editingId = null;
                 this.dom.form.reset();
-                this.dom.submitBtn.textContent = '+';
+                this.dom.liquidPercentInput.value = 100;
+                this.dom.liquidAbsoluteInput.value = '';
+                this.dom.submitBtn.textContent = 'Add Item';
                 this.dom.cancelBtn.style.display = 'none';
             }
 
@@ -755,14 +1039,16 @@
                     return;
                 }
 
-                const headers = ['ID', 'Name', 'Value', 'Interest Rate (%)', 'Type', 'Category', 'Date'];
+                const headers = ['ID', 'Name', 'Value', 'Interest Rate (%)', 'Type', 'Category', '% Liquid', 'Absolute Liquid', 'Date'];
                 const rows = this.items.map(item => [
                     item.id,
-                    `"${item.name.replace(/"/g, '""')}"`, // Escape quotes
+                    `"${item.name.replace(/"/g, '""')}"`,
                     item.value,
                     item.rate || 0,
                     item.type,
                     item.category,
+                    item.percentLiquid || 0,
+                    item.absoluteLiquid || 0,
                     item.date
                 ]);
 
@@ -785,27 +1071,92 @@
             calculateTotals() {
                 let assets = 0;
                 let liabilities = 0;
+                let liquidAssets = 0;
+                let liquidLiabilities = 0;
 
                 this.items.forEach(item => {
-                    if (item.type === 'asset') assets += item.value;
-                    else liabilities += item.value;
+                    const val = item.value || 0;
+                    const liquidVal = item.absoluteLiquid !== undefined ? item.absoluteLiquid : val;
+
+                    if (item.type === 'asset') {
+                        assets += val;
+                        liquidAssets += liquidVal;
+                    } else {
+                        liabilities += val;
+                        liquidLiabilities += liquidVal; // Subtracts from liquid net worth
+                    }
                 });
 
                 return {
                     assets,
                     liabilities,
-                    netWorth: assets - liabilities
+                    netWorth: assets - liabilities,
+                    liquidNetWorth: liquidAssets - liquidLiabilities,
+                    liquidRatio: assets > 0 ? (liquidAssets / assets) * 100 : 0
                 };
+            }
+
+            calculateRebalancing() {
+                let equity = 0, debt = 0, gold = 0;
+                const equityCategories = ['Stocks', 'Mutual Funds'];
+                const goldCategories = ['Gold / Silver'];
+
+                this.items.forEach(item => {
+                    if (item.type === 'asset') {
+                        if (equityCategories.includes(item.category)) equity += item.value;
+                        else if (goldCategories.includes(item.category)) gold += item.value;
+                        else debt += item.value;
+                    }
+                });
+
+                const total = equity + debt + gold;
+                if (total === 0) {
+                    this.dom.rebalanceText.textContent = "Add some assets to analyze rebalancing.";
+                    return;
+                }
+
+                const targetEq = parseFloat(this.dom.targetEquity.value) || 0;
+                const targetDt = parseFloat(this.dom.targetDebt.value) || 0;
+                const targetGd = parseFloat(this.dom.targetGold.value) || 0;
+
+                if (Math.abs((targetEq + targetDt + targetGd) - 100) > 0.1) {
+                    this.dom.rebalanceText.innerHTML = `<span style="color:var(--accent-red)">Targets must equal 100%. Currently: ${targetEq + targetDt + targetGd}%</span>`;
+                    return;
+                }
+
+                const currentEqPct = (equity / total) * 100;
+                const currentDtPct = (debt / total) * 100;
+                const currentGdPct = (gold / total) * 100;
+
+                const eqTargetValue = (targetEq / 100) * total;
+                const dtTargetValue = (targetDt / 100) * total;
+                const gdTargetValue = (targetGd / 100) * total;
+
+                let actions = [];
+
+                if (Math.abs(currentEqPct - targetEq) > 2) {
+                    const diff = equity - eqTargetValue;
+                    actions.push(`Equity is ${currentEqPct.toFixed(1)}% (Target ${targetEq}%). ${diff > 0 ? 'Sell/Move' : 'Buy'} <b>${this.currencyFormatter.format(Math.abs(diff))}</b>.`);
+                }
+                if (Math.abs(currentDtPct - targetDt) > 2) {
+                    const diff = debt - dtTargetValue;
+                    actions.push(`Debt is ${currentDtPct.toFixed(1)}% (Target ${targetDt}%). ${diff > 0 ? 'Sell/Move' : 'Buy'} <b>${this.currencyFormatter.format(Math.abs(diff))}</b>.`);
+                }
+                if (Math.abs(currentGdPct - targetGd) > 2) {
+                    const diff = gold - gdTargetValue;
+                    actions.push(`Gold is ${currentGdPct.toFixed(1)}% (Target ${targetGd}%). ${diff > 0 ? 'Sell/Move' : 'Buy'} <b>${this.currencyFormatter.format(Math.abs(diff))}</b>.`);
+                }
+
+                if (actions.length === 0) {
+                    this.dom.rebalanceText.innerHTML = '<span style="color:var(--accent-green)">Your portfolio is perfectly balanced to your targets!</span>';
+                } else {
+                    this.dom.rebalanceText.innerHTML = `<ul style="padding-left: 1rem; margin: 0;"><li>${actions.join('</li><li>')}</li></ul>`;
+                }
             }
 
             calculateProjectionData() {
                 const years = 10;
-                const data = {
-                    labels: [],
-                    netWorth: [],
-                    assets: [],
-                    liabilities: []
-                };
+                const data = { labels: [], netWorth: [], assets: [], liabilities: [] };
 
                 for (let year = 0; year <= years; year++) {
                     let futureAssets = 0;
@@ -815,11 +1166,8 @@
                         const rate = (item.rate || 0) / 100;
                         const futureValue = item.value * Math.pow((1 + rate), year);
 
-                        if (item.type === 'asset') {
-                            futureAssets += futureValue;
-                        } else {
-                            futureLiabilities += futureValue;
-                        }
+                        if (item.type === 'asset') futureAssets += futureValue;
+                        else futureLiabilities += futureValue;
                     });
 
                     data.labels.push(year === 0 ? 'Today' : `Year ${year}`);
@@ -833,8 +1181,6 @@
             getCategoryBreakdown() {
                 const breakdown = {};
                 this.items.forEach(item => {
-                    // For the chart, we might want to visualize assets primarily, or both.
-                    // Let's visualize just Assets allocation for now as is typical.
                     if (item.type === 'asset') {
                         if (!breakdown[item.category]) breakdown[item.category] = 0;
                         breakdown[item.category] += item.value;
@@ -847,18 +1193,10 @@
                 const labels = Object.keys(breakdown);
                 const data = Object.values(breakdown);
 
-                // Destroy old chart if exists
-                if (this.chart) {
-                    this.chart.destroy();
-                }
-
-                // If no assets, show empty state or nothing
+                if (this.chart) this.chart.destroy();
                 if (labels.length === 0) return;
 
                 const ctx = this.dom.chartCanvas.getContext('2d');
-
-                // Custom plugin to draw text in center (optional, keeping simple for now)
-
                 this.chart = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
@@ -878,14 +1216,7 @@
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    color: '#94a3b8',
-                                    usePointStyle: true,
-                                    padding: 20
-                                }
-                            }
+                            legend: { position: 'bottom', labels: { color: '#94a3b8', usePointStyle: true, padding: 20 } }
                         },
                         cutout: '70%'
                     }
@@ -893,81 +1224,52 @@
             }
 
             renderProjectionChart(data) {
-                if (this.projChart) {
-                    this.projChart.destroy();
-                }
+                if (this.projChart) this.projChart.destroy();
 
                 const ctx = this.dom.projChartCanvas.getContext('2d');
 
-                // Create gradients
+                const style = getComputedStyle(document.documentElement);
+                const accentPrimary = style.getPropertyValue('--accent-primary').trim() || '#38BDF8';
+                const accentGreen = style.getPropertyValue('--accent-green').trim() || '#059669';
+                const textSec = style.getPropertyValue('--text-secondary').trim() || '#57534E';
+                const cardBg = style.getPropertyValue('--card-bg').trim() || '#111827';
+                const textPri = style.getPropertyValue('--text-primary').trim() || '#ffffff';
+                const borderCol = style.getPropertyValue('--border-color').trim() || '#E7E5E4';
+
                 const gradientNetWorth = ctx.createLinearGradient(0, 0, 0, 400);
-                gradientNetWorth.addColorStop(0, 'rgba(15, 23, 42, 0.2)'); // Navy with opacity
-                gradientNetWorth.addColorStop(1, 'rgba(15, 23, 42, 0.0)');
+                gradientNetWorth.addColorStop(0, accentPrimary + '33');
+                gradientNetWorth.addColorStop(1, accentPrimary + '00');
 
                 this.projChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: data.labels,
                         datasets: [
-                            {
-                                label: 'Net Worth',
-                                data: data.netWorth,
-                                borderColor: '#0F172A', // Navy
-                                backgroundColor: gradientNetWorth,
-                                fill: true,
-                                tension: 0.4
-                            },
-                            {
-                                label: 'Assets',
-                                data: data.assets,
-                                borderColor: '#059669', // Emerald
-                                borderDash: [5, 5],
-                                tension: 0.4,
-                                hidden: true // Hide by default to reduce clutter, can be toggled
-                            }
+                            { label: 'Net Worth', data: data.netWorth, borderColor: accentPrimary, backgroundColor: gradientNetWorth, fill: true, tension: 0.4 },
+                            { label: 'Assets', data: data.assets, borderColor: accentGreen, borderDash: [5, 5], tension: 0.4, hidden: true }
                         ]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        interaction: {
-                            mode: 'index',
-                            intersect: false,
-                        },
+                        interaction: { mode: 'index', intersect: false },
                         plugins: {
-                            legend: {
-                                labels: { color: '#57534E' } // Stone Gray
-                            },
+                            legend: { labels: { color: textSec } },
                             tooltip: {
-                                backgroundColor: '#FFFFFF',
-                                titleColor: '#1C1917',
-                                bodyColor: '#57534E',
-                                borderColor: '#E7E5E4',
-                                borderWidth: 1,
-                                padding: 10,
+                                backgroundColor: cardBg, titleColor: textPri, bodyColor: textSec, borderColor: borderCol, borderWidth: 1, padding: 10,
                                 callbacks: {
                                     label: (context) => {
                                         let label = context.dataset.label || '';
-                                        if (label) {
-                                            label += ': ';
-                                        }
-                                        if (context.parsed.y !== null) {
-                                            label += this.currencyFormatter.format(context.parsed.y);
-                                        }
+                                        if (label) label += ': ';
+                                        if (context.parsed.y !== null) label += this.currencyFormatter.format(context.parsed.y);
                                         return label;
                                     }
                                 }
                             }
                         },
                         scales: {
-                            y: {
-                                grid: { color: 'rgba(0, 0, 0, 0.05)' },
-                                ticks: { color: '#57534E' }
-                            },
-                            x: {
-                                grid: { display: false },
-                                ticks: { color: '#57534E' }
-                            }
+                            y: { grid: { color: textPri + '1A' }, ticks: { color: textSec } },
+                            x: { grid: { display: false }, ticks: { color: textSec } }
                         }
                     }
                 });
@@ -975,14 +1277,12 @@
 
             renderProjectionTable(data) {
                 this.dom.projTableBody.innerHTML = '';
-                // Show Year 1, 3, 5, 10
                 const yearsToShow = [1, 3, 5, 10];
 
                 yearsToShow.forEach(year => {
-                    // +1 because index 0 is Today
                     if (year < data.labels.length) {
                         const currentVal = data.netWorth[year];
-                        const prevVal = data.netWorth[0]; // Compare to today
+                        const prevVal = data.netWorth[0];
                         const growth = currentVal - prevVal;
                         const growthPercent = prevVal !== 0 ? (growth / Math.abs(prevVal)) * 100 : 0;
 
@@ -1001,17 +1301,21 @@
             }
 
             render() {
-                // 1. Render List
+                // Render List
                 this.dom.list.innerHTML = '';
                 this.items.sort((a, b) => b.value - a.value).forEach(item => {
                     const li = document.createElement('li');
                     li.className = `item ${item.type}`;
-                    const rateText = item.rate ? `<span style="margin-left:0.5rem; font-size:0.75rem; color:var(--text-secondary); background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px;">${item.rate}% APY</span>` : '';
+
+                    const rateText = item.rate ? `<span style="font-size:0.75rem; color:var(--text-secondary); background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px;">${item.rate}% APY</span>` : '';
+
+                    const pctLiq = item.percentLiquid !== undefined ? item.percentLiquid : 100;
+                    const liquidBadge = pctLiq < 100 ? `<span style="font-size:0.75rem; color:var(--accent-blue); background:rgba(56, 189, 248, 0.1); padding:2px 6px; border-radius:4px;">${pctLiq}% Liquid</span>` : '';
 
                     li.innerHTML = `
                     <div class="item-info">
-                        <h4>${item.name} ${rateText}</h4>
-                        <span>${item.category}</span>
+                        <h4>${item.name} ${rateText} ${liquidBadge}</h4>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">${item.category}</span>
                     </div>
                     <div class="item-actions">
                         <span class="item-price" style="color: ${item.type === 'asset' ? 'var(--accent-green)' : 'var(--accent-red)'}">
@@ -1026,22 +1330,23 @@
                     this.dom.list.appendChild(li);
                 });
 
-                // 2. Update Totals
+                // Update Totals
                 const totals = this.calculateTotals();
                 this.dom.netWorth.textContent = this.currencyFormatter.format(totals.netWorth);
                 this.dom.assets.textContent = this.currencyFormatter.format(totals.assets);
                 this.dom.liabilities.textContent = this.currencyFormatter.format(totals.liabilities);
+                this.dom.liquidNwDisplay.textContent = this.currencyFormatter.format(totals.liquidNetWorth);
+                this.dom.liquidity.textContent = `${totals.liquidRatio.toFixed(1)}%`;
 
-                // 3. Update Projections (Chart & Table)
+                this.calculateRebalancing();
+
                 const projectionData = this.calculateProjectionData();
                 this.renderProjectionChart(projectionData);
                 this.renderProjectionTable(projectionData);
 
-                // 4. Update Chart
                 const breakdown = this.getCategoryBreakdown();
                 this.updateChart(breakdown);
 
-                // 5. Update Insights
                 if (totals.assets > 0) {
                     const ratio = ((totals.assets - totals.liabilities) / totals.assets) * 100;
                     this.dom.insightText.innerHTML = `
@@ -1054,7 +1359,6 @@
             }
         }
 
-        // Initialize App
         const app = new WealthApp();
     </script>
 
