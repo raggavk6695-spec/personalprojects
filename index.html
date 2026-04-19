@@ -11,7 +11,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="WealthMonitor">
+    <meta name="apple-mobile-web-app-title" content="WealthPlanner">
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' fill='%230F172A'/%3E%3Crect x='36' y='56' width='120' height='80' rx='8' fill='%23059669'/%3E%3Ccircle cx='96' cy='96' r='20' fill='%23FDFBF7'/%3E%3Ctext x='50%25' y='50%25' font-size='24' fill='%230F172A' font-family='sans-serif' font-weight='bold' text-anchor='middle' dominant-baseline='central'%3E%24%3C/text%3E%3Ccircle cx='52' cy='72' r='4' fill='%230F172A'/%3E%3Ccircle cx='140' cy='72' r='4' fill='%230F172A'/%3E%3Ccircle cx='52' cy='120' r='4' fill='%230F172A'/%3E%3Ccircle cx='140' cy='120' r='4' fill='%230F172A'/%3E%3C/svg%3E">
@@ -223,39 +223,162 @@
             background-color: var(--bg-color);
             color: var(--text-primary);
             min-height: 100vh;
-            padding: 1rem;
+            display: flex;
             background-image:
                 radial-gradient(at 0% 0%, color-mix(in srgb, var(--accent-primary) 5%, transparent) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, color-mix(in srgb, var(--accent-secondary) 5%, transparent) 0px, transparent 50%);
+            overflow: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Layout Structure */
+        .app-layout {
+            display: flex;
             width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
         }
 
-        header {
-            margin-bottom: 2rem;
+        /* Sidebar Styling */
+        .sidebar {
+            position: absolute;
+            left: -280px;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background: color-mix(in srgb, var(--bg-color) 80%, var(--card-bg));
+            border-right: 1px solid var(--border-color);
+            z-index: 100;
+            transition: left 0.3s ease;
+            box-shadow: var(--glass-shadow);
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            align-items: flex-start;
         }
 
-        @media (min-width: 640px) {
-            header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-header h2 {
+            color: var(--accent-primary);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 1rem 0;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav li {
+            padding: 0.25rem 1rem;
+        }
+
+        .tab-btn {
+            width: 100%;
+            text-align: left;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: color-mix(in srgb, var(--border-color) 40%, transparent);
+        }
+
+        .tab-btn.active {
+            color: var(--text-primary);
+            background: color-mix(in srgb, var(--accent-primary) 10%, var(--border-color));
+            font-weight: 600;
+        }
+
+        .close-sidebar {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            height: 100%;
+            overflow-y: auto;
+            position: relative;
+            padding: 1rem;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: color-mix(in srgb, var(--card-bg) 50%, transparent);
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .open-sidebar {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .topbar-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                position: static;
+                left: 0;
+            }
+
+            .close-sidebar,
+            .open-sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 2rem;
             }
         }
 
-        h1 {
-            font-weight: 700;
-            letter-spacing: -0.03em;
-            color: var(--accent-primary);
-            font-size: 1.75rem;
+        /* Tabs Logic */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         h3 {
@@ -320,19 +443,6 @@
 
         .liabilities-val {
             color: var(--accent-red);
-        }
-
-        /* Content Area - Mobile First (Stack) */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 1024px) {
-            .content-grid {
-                grid-template-columns: 2fr 1fr;
-            }
         }
 
         /* Forms & List */
@@ -538,207 +648,228 @@
 
 <body>
 
-    <div class="container animate-in">
-        <header>
-            <h1>WealthMonitor</h1>
-            <div style="display:flex; gap:0.5rem; flex-wrap: wrap;">
-                <button onclick="app.openSettings()"
-                    style="background:transparent; border:1px solid var(--border-color); color:var(--text-secondary); padding:0.5rem 1rem; border-radius:0.5rem; cursor:pointer;"
-                    title="Settings">⚙️</button>
-                <button onclick="app.exportToCSV()"
-                    style="background:var(--accent-blue); border:none; color:white; padding:0.5rem 1rem; border-radius:0.5rem; cursor:pointer; font-weight:600;">Download
-                    CSV</button>
-                <button onclick="app.resetData()"
-                    style="background:transparent; border:1px solid var(--border-color); color:var(--text-secondary); padding:0.5rem 1rem; border-radius:0.5rem; cursor:pointer;">Reset
-                    Data</button>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>WealthPlanner</h2>
+                <button class="close-sidebar lg-hidden" onclick="app.toggleSidebar()">&times;</button>
             </div>
-        </header>
+            <ul class="sidebar-nav">
+                <li><button class="tab-btn active" data-tab="dashboard">Dashboard</button></li>
+                <li><button class="tab-btn" data-tab="projections">Projections</button></li>
+                <li><button class="tab-btn" data-tab="portfolio">Portfolio</button></li>
+                <li><button class="tab-btn" data-tab="monthly-interest">Monthly Interest</button></li>
+            </ul>
+        </nav>
 
-        <!-- Settings Modal -->
-        <div id="settings-modal"
-            style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
-            <div class="card"
-                style="width:90%; max-width:500px; background:var(--bg-color); border:1px solid var(--border-color);">
-                <div class="panel-header">
-                    <h3>Settings</h3>
-                    <button onclick="app.closeSettings()"
-                        style="background:transparent; border:none; color:var(--text-secondary); font-size:1.5rem; cursor:pointer;">&times;</button>
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header class="topbar">
+                <button class="open-sidebar lg-hidden" onclick="app.toggleSidebar()">☰</button>
+                <div class="topbar-actions">
+                    <button class="btn-icon" onclick="app.openSettings()" title="Settings">⚙️</button>
+                    <button class="btn-icon" onclick="app.exportToCSV()" title="Download CSV">📥</button>
+                    <button class="btn-icon"
+                        style="color: var(--accent-red); border: 1px solid var(--border-color); padding: 0.25rem 0.5rem; border-radius: 0.5rem;"
+                        onclick="app.resetData()" title="Reset Data">Reset</button>
                 </div>
+            </header>
 
-                <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Theme</h4>
-                <div class="input-group" style="margin-bottom: 1.5rem;">
-                    <select id="theme-selector" onchange="app.changeTheme(this.value)">
-                        <option value="default">Default Dark</option>
-                        <option value="light-minimalist">Light Minimalist</option>
-                        <option value="midnight-purple">Midnight Purple</option>
-                        <option value="forest-glow">Forest Glow</option>
-                        <option value="sunset-dark">Sunset Dark</option>
-                        <option value="ocean-blue">Ocean Blue</option>
-                        <option value="nordic-frost">Nordic Frost</option>
-                        <option value="cyberpunk">Cyberpunk</option>
-                        <option value="coffee-sepia">Coffee & Sepia</option>
-                        <option value="mint-breeze">Mint Breeze</option>
-                    </select>
-                </div>
-
-                <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Data Sync</h4>
-                <p style="margin-bottom:1rem; color:var(--text-secondary); font-size:0.9rem;">
-                    Sync your data with the connected Google Sheet.
-                </p>
-                <div style="display:flex; gap:1rem; align-items:center;">
-                    <button onclick="app.manualSync()" class="btn btn-primary">Sync Now</button>
-                    <span id="sync-status" style="font-size:0.875rem; color:var(--text-secondary);"></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="dashboard">
-            <div class="card">
-                <div class="metric-label">Net Worth</div>
-                <div class="metric-value net-worth" id="display-net-worth">$0.00</div>
-            </div>
-            <div class="card">
-                <div class="metric-label">Total Assets</div>
-                <div class="metric-value assets-val" id="display-assets">$0.00</div>
-            </div>
-            <div class="card">
-                <div class="metric-label">Total Liabilities</div>
-                <div class="metric-value liabilities-val" id="display-liabilities">$0.00</div>
-            </div>
-            <div class="card">
-                <div class="metric-label">Liquid Net Worth</div>
-                <div class="metric-value" id="display-liquid-nw" style="color: var(--accent-blue);">$0.00</div>
-                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
-                    Liquidity Ratio: <span id="display-liquidity">0%</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Projections Section -->
-        <div class="card" style="margin-bottom: 2rem;">
-            <div class="panel-header" style="margin-bottom: 1rem; border-bottom: none;">
-                <h3>Projected Net Worth (10 Years)</h3>
-                <div style="font-size:0.875rem; color:var(--text-secondary);">Estimated growth based on current rates
-                </div>
-            </div>
-
-            <div class="projections-grid">
-                <div class="chart-container" style="height: 350px;">
-                    <canvas id="projectionChart"></canvas>
-                </div>
-                <div>
-                    <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 0.9rem;">
-                        <thead>
-                            <tr style="color: var(--text-secondary); border-bottom: 1px solid var(--border-color);">
-                                <th style="padding: 0.5rem 0;">Year</th>
-                                <th style="padding: 0.5rem 0; text-align: right;">Net Worth</th>
-                                <th style="padding: 0.5rem 0; text-align: right;">Growth</th>
-                            </tr>
-                        </thead>
-                        <tbody id="projection-table-body">
-                            <!-- Rows injected by JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="content-grid">
-            <!-- Main Panel: List & Form -->
-            <div class="card">
-                <div class="panel-header">
-                    <h3>Portfolio Items</h3>
-                    <div style="font-size:0.875rem; color:var(--text-secondary);">Manage your assets & liabilities</div>
-                </div>
-
-                <form id="add-item-form" class="form-grid">
-                    <div class="input-group full-width">
-                        <label class="input-label" for="input-name">Item Name</label>
-                        <input type="text" id="input-name" placeholder="e.g., Home, Tesla Stock" required>
+            <!-- Settings Modal -->
+            <div id="settings-modal"
+                style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+                <div class="card"
+                    style="width:90%; max-width:500px; background:var(--bg-color); border:1px solid var(--border-color);">
+                    <div class="panel-header">
+                        <h3>Settings</h3>
+                        <button onclick="app.closeSettings()"
+                            style="background:transparent; border:none; color:var(--text-secondary); font-size:1.5rem; cursor:pointer;">&times;</button>
                     </div>
-                    <div class="input-group">
-                        <label class="input-label" for="input-value">Total Value</label>
-                        <input type="number" id="input-value" placeholder="0.00" min="0" step="0.01" required>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label" for="input-rate">Interest Rate</label>
-                        <input type="number" id="input-rate" placeholder="0%" step="0.01">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label" for="input-type">Type</label>
-                        <select id="input-type">
-                            <option value="asset">Asset</option>
-                            <option value="liability">Liability</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label" for="input-category">Category</label>
-                        <select id="input-category">
-                            <option value="Savings Account">Savings Account</option>
-                            <option value="Fixed Deposit (FD)">Fixed Deposit (FD)</option>
-                            <option value="Recurring Deposit (RD)">Recurring Deposit (RD)</option>
-                            <option value="EPF">EPF (Employee Provident Fund)</option>
-                            <option value="PPF">PPF (Public Provident Fund)</option>
-                            <option value="NPS">NPS (National Pension System)</option>
-                            <option value="Mutual Funds">Mutual Funds</option>
-                            <option value="Stocks">Stocks</option>
-                            <option value="Real Estate">Real Estate</option>
-                            <option value="Gold / Silver">Gold / Silver</option>
-                            <option value="Crypto">Crypto</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Loan / Debt">Loan / Debt</option>
-                            <option value="Other">Other</option>
+
+                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Theme</h4>
+                    <div class="input-group" style="margin-bottom: 1.5rem;">
+                        <select id="theme-selector" onchange="app.changeTheme(this.value)">
+                            <option value="default">Default Dark</option>
+                            <option value="light-minimalist">Light Minimalist</option>
+                            <option value="midnight-purple">Midnight Purple</option>
+                            <option value="forest-glow">Forest Glow</option>
+                            <option value="sunset-dark">Sunset Dark</option>
+                            <option value="ocean-blue">Ocean Blue</option>
+                            <option value="nordic-frost">Nordic Frost</option>
+                            <option value="cyberpunk">Cyberpunk</option>
+                            <option value="coffee-sepia">Coffee & Sepia</option>
+                            <option value="mint-breeze">Mint Breeze</option>
                         </select>
                     </div>
 
-                    <div class="input-group">
-                        <label class="input-label" for="input-liquid-percent">% Liquid</label>
-                        <input type="number" id="input-liquid-percent" placeholder="100" min="0" max="100" step="0.01"
-                            value="100">
+                    <h4 style="margin-bottom: 0.5rem; color: var(--text-primary);">Data Sync</h4>
+                    <p style="margin-bottom:1rem; color:var(--text-secondary); font-size:0.9rem;">
+                        Sync your data with the connected Google Sheet.
+                    </p>
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <button onclick="app.manualSync()" class="btn btn-primary" style="width: auto;">Sync
+                            Now</button>
+                        <span id="sync-status" style="font-size:0.875rem; color:var(--text-secondary);"></span>
                     </div>
-                    <div class="input-group">
-                        <label class="input-label" for="input-liquid-absolute">Absolute Liquid</label>
-                        <input type="number" id="input-liquid-absolute" placeholder="0.00" min="0" step="0.01">
-                    </div>
-
-                    <div
-                        style="display:flex; gap:0.5rem; padding-bottom: 0.1rem; align-items: flex-end; grid-column: 1 / -1;">
-                        <button type="submit" id="btn-submit" class="btn btn-primary" style="flex: 1;">Add Item</button>
-                        <button type="button" id="btn-cancel" class="btn"
-                            style="width: 100px; background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); display: none;">Cancel</button>
-                    </div>
-                </form>
-
-                <ul class="items-list" id="items-list">
-                    <!-- Items will be injected here -->
-                </ul>
+                </div>
             </div>
 
-            <!-- Right Column -->
-            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
-                <!-- Side Panel: Visuals -->
-                <div class="card">
+            <!-- Tab: Dashboard -->
+            <div class="tab-content active animate-in" id="tab-dashboard">
+                <div class="dashboard">
+                    <div class="card">
+                        <div class="metric-label">Net Worth</div>
+                        <div class="metric-value net-worth" id="display-net-worth">$0.00</div>
+                    </div>
+                    <div class="card">
+                        <div class="metric-label">Total Assets</div>
+                        <div class="metric-value assets-val" id="display-assets">$0.00</div>
+                    </div>
+                    <div class="card">
+                        <div class="metric-label">Total Liabilities</div>
+                        <div class="metric-value liabilities-val" id="display-liabilities">$0.00</div>
+                    </div>
+                    <div class="card">
+                        <div class="metric-label">Liquid Net Worth</div>
+                        <div class="metric-value" id="display-liquid-nw" style="color: var(--accent-blue);">$0.00</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem;">
+                            Liquidity Ratio: <span id="display-liquidity">0%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-bottom: 2rem;">
                     <div class="panel-header">
                         <h3>Allocation</h3>
                     </div>
                     <div class="chart-container">
                         <canvas id="wealthChart"></canvas>
                     </div>
-                    <div style="margin-top: 2rem;">
-                        <h4 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">INSIGHTS
-                        </h4>
+                    <div style="margin-top: 1.5rem;">
                         <p id="insight-text" style="font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary);">
                             Add items to see your wealth distribution.
                         </p>
                     </div>
                 </div>
+            </div>
 
-                <!-- Feature: Target Allocation -->
-                <div class="card">
+            <!-- Tab: Projections -->
+            <div class="tab-content animate-in" id="tab-projections">
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="panel-header" style="margin-bottom: 1rem; border-bottom: none;">
+                        <h3>Projected Net Worth (10 Years)</h3>
+                        <div style="font-size:0.875rem; color:var(--text-secondary);">Estimated growth based on current
+                            rates</div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                        <div class="chart-container" style="height: 350px;">
+                            <canvas id="projectionChart"></canvas>
+                        </div>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; text-align: left; border-collapse: collapse; font-size: 0.9rem;">
+                                <thead>
+                                    <tr
+                                        style="color: var(--text-secondary); border-bottom: 1px solid var(--border-color);">
+                                        <th style="padding: 0.5rem 0;">Year</th>
+                                        <th style="padding: 0.5rem 0; text-align: right;">Net Worth</th>
+                                        <th style="padding: 0.5rem 0; text-align: right;">Growth</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="projection-table-body">
+                                    <!-- Rows injected by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Portfolio -->
+            <div class="tab-content animate-in" id="tab-portfolio">
+                <div class="card" style="max-width: 800px; margin: 0 auto 2rem auto;">
+                    <div class="panel-header">
+                        <h3>Create Portfolio Item</h3>
+                        <div style="font-size:0.875rem; color:var(--text-secondary);">Add an asset or liability</div>
+                    </div>
+
+                    <form id="add-item-form" class="form-grid">
+                        <div class="input-group full-width">
+                            <label class="input-label" for="input-name">Item Name</label>
+                            <input type="text" id="input-name" placeholder="e.g., Home, Tesla Stock" required>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label" for="input-value">Total Value</label>
+                            <input type="number" id="input-value" placeholder="0.00" min="0" step="0.01" required>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label" for="input-rate">Annual Interest Rate</label>
+                            <input type="number" id="input-rate" placeholder="0%" step="0.01">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label" for="input-type">Type</label>
+                            <select id="input-type">
+                                <option value="asset">Asset</option>
+                                <option value="liability">Liability</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label" for="input-category">Category</label>
+                            <select id="input-category">
+                                <option value="Savings Account">Savings Account</option>
+                                <option value="Fixed Deposit (FD)">Fixed Deposit (FD)</option>
+                                <option value="Recurring Deposit (RD)">Recurring Deposit (RD)</option>
+                                <option value="EPF">EPF (Employee Provident Fund)</option>
+                                <option value="PPF">PPF (Public Provident Fund)</option>
+                                <option value="NPS">NPS (National Pension System)</option>
+                                <option value="Mutual Funds">Mutual Funds</option>
+                                <option value="Stocks">Stocks</option>
+                                <option value="Real Estate">Real Estate</option>
+                                <option value="Gold / Silver">Gold / Silver</option>
+                                <option value="Crypto">Crypto</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Loan / Debt">Loan / Debt</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="input-liquid-percent">% Liquid</label>
+                            <input type="number" id="input-liquid-percent" placeholder="100" min="0" max="100"
+                                step="0.01" value="100">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label" for="input-liquid-absolute">Absolute Liquid</label>
+                            <input type="number" id="input-liquid-absolute" placeholder="0.00" min="0" step="0.01">
+                        </div>
+
+                        <div
+                            style="display:flex; gap:0.5rem; padding-bottom: 0.1rem; align-items: flex-end; grid-column: 1 / -1; margin-top: 1rem;">
+                            <button type="submit" id="btn-submit" class="btn btn-primary" style="flex: 1;">Add
+                                Item</button>
+                            <button type="button" id="btn-cancel" class="btn"
+                                style="width: 100px; background: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); display: none;">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card" style="max-width: 800px; margin: 0 auto;">
+                    <div class="panel-header">
+                        <h3>Portfolio Items</h3>
+                    </div>
+                    <ul class="items-list" id="items-list" style="max-height: 60vh; overflow-y: auto;">
+                        <!-- Items injected by JS -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab: Target Rebalancing -->
+            <div class="tab-content animate-in" id="tab-rebalancing">
+                <div class="card" style="max-width: 800px; margin: 0 auto;">
                     <div class="panel-header">
                         <h3>Target Rebalancing</h3>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 1rem;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
                         <div class="input-group">
                             <label class="input-label">Equity %</label>
                             <input type="number" id="target-equity" value="60" min="0" max="100">
@@ -754,44 +885,48 @@
                     </div>
                     <button id="btn-rebalance" class="btn btn-primary" onclick="app.calculateRebalancing()">Analyze
                         Rebalancing</button>
-                    <div style="margin-top: 1.5rem;">
+
+                    <div style="margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
                         <h4 style="margin-bottom: 1rem; color: var(--text-secondary); font-size: 0.875rem;">ACTION PLAN
                         </h4>
                         <div id="rebalance-text"
-                            style="font-size: 0.9rem; line-height: 1.5; color: var(--text-secondary);">
+                            style="font-size: 0.95rem; line-height: 1.5; color: var(--text-primary);">
                             Set target allocations (total 100%) and analyze.
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Monthly Interest Simulation -->
-                <div class="card">
+            <!-- Tab: Monthly Interest -->
+            <div class="tab-content animate-in" id="tab-monthly-interest">
+                <div class="card" style="max-width: 800px; margin: 0 auto;">
                     <div class="panel-header">
                         <h3>Monthly Interest</h3>
                     </div>
                     <p style="font-size:0.875rem; color:var(--text-secondary); margin-bottom:1rem;">
                         Net monthly yield based on your compounding settings.
                     </p>
-                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 1rem;"
+                    <div style="font-size: 2rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 1.5rem;"
                         id="total-monthly-interest">
                         $0.00
                     </div>
                     <div id="interest-items-list"
-                        style="max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;">
+                        style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem;">
                         <!-- Injected by JS -->
                     </div>
 
                     <div
-                        style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; gap: 0.5rem; align-items: center;">
+                        style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); display: flex; gap: 1rem; align-items: center;">
                         <select id="sim-add-store"
-                            style="flex: 1; padding: 0.5rem; font-size: 0.85rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; color: var(--text-primary);">
+                            style="flex: 1; padding: 0.75rem; font-size: 0.95rem; background: var(--input-bg); border: 1px solid var(--border-color); border-radius: 0.5rem; color: var(--text-primary);">
                             <option value="">Select item to add...</option>
                         </select>
-                        <button class="btn btn-primary" style="width: auto; padding: 0.5rem 1rem; font-size: 0.85rem;"
-                            onclick="app.addSimItem()">Add</button>
+                        <button class="btn btn-primary" style="width: auto; padding: 0.75rem 1.5rem;"
+                            onclick="app.addSimItem()">Add to Tracker</button>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -885,7 +1020,10 @@
                     rebalanceText: document.getElementById('rebalance-text'),
                     settingsModal: document.getElementById('settings-modal'),
                     syncStatus: document.getElementById('sync-status'),
-                    themeSelector: document.getElementById('theme-selector')
+                    themeSelector: document.getElementById('theme-selector'),
+                    sidebar: document.getElementById('sidebar'),
+                    tabBtns: document.querySelectorAll('.tab-btn'),
+                    tabContents: document.querySelectorAll('.tab-content')
                 };
             }
 
@@ -903,6 +1041,46 @@
                 this.dom.valueInput.addEventListener('input', () => this.syncLiquidity('value'));
                 this.dom.liquidPercentInput.addEventListener('input', () => this.syncLiquidity('percent'));
                 this.dom.liquidAbsoluteInput.addEventListener('input', () => this.syncLiquidity('absolute'));
+
+                // Tab switching
+                this.dom.tabBtns.forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const tabId = e.target.getAttribute('data-tab');
+                        this.switchTab(tabId);
+                        if (window.innerWidth < 1024) {
+                            this.toggleSidebar(); // Auto-close on mobile
+                        }
+                    });
+                });
+            }
+
+            toggleSidebar() {
+                this.dom.sidebar.classList.toggle('open');
+            }
+
+            switchTab(tabId) {
+                // Update active button
+                this.dom.tabBtns.forEach(btn => {
+                    if (btn.getAttribute('data-tab') === tabId) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+
+                // Update visible content
+                this.dom.tabContents.forEach(content => {
+                    if (content.id === 'tab-' + tabId) {
+                        content.classList.add('active');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+
+                // Force chart re-renders when their container gets 'display: block'
+                if (tabId === 'dashboard' || tabId === 'projections') {
+                    this.render();
+                }
             }
 
             syncLiquidity(source) {
@@ -1011,6 +1189,7 @@
 
                     this.save();
                     this.render();
+                    this.switchTab('portfolio');
                 }
             }
 
@@ -1028,7 +1207,11 @@
 
                     this.dom.submitBtn.textContent = 'Update';
                     this.dom.cancelBtn.style.display = 'inline-block';
-                    window.scrollTo({ top: this.dom.form.offsetTop - 100, behavior: 'smooth' });
+
+                    // Switch to Portfolio tab (form is there)
+                    this.switchTab('portfolio');
+                    // Scroll to the top to see the form
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             }
 
