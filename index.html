@@ -799,7 +799,7 @@
         class WealthApp {
             constructor() {
                 this.items = JSON.parse(localStorage.getItem('wealth_items')) || [];
-                this.scriptURL = 'https://script.google.com/macros/s/AKfycbzw7XK21XKBCFZomHrMUju0jW3BStNUUrpdkzkXmiejlu3qR7_CV_XYTCaJGIWitjjOdQ/exec';
+                this.scriptURL = 'https://script.google.com/macros/s/AKfycbx1_Aw0MqvjbkQROo8gVwbeomtQJFBdtSLqzCc8UQtwn6THMBYRV0CfM6akWpCBOqFztA/exec';
                 this.editingId = null;
                 this.chart = null;
                 this.currencyFormatter = new Intl.NumberFormat('en-IN', {
@@ -949,7 +949,12 @@
                     const res = await fetch(this.scriptURL);
                     const data = await res.json();
                     if (Array.isArray(data) && data.length > 0) {
-                        this.items = data;
+                        // Merge with local items to preserve fields that might not be synced to sheet yet
+                        const localMap = new Map(this.items.map(i => [i.id, i]));
+                        this.items = data.map(remoteItem => {
+                            const localItem = localMap.get(remoteItem.id) || {};
+                            return { ...localItem, ...remoteItem };
+                        });
                         this.migrateLegacyData(); // In case sheet has old data
                         this.save(true);
                         this.render();
