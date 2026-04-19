@@ -36,8 +36,8 @@ function doPost(e) {
                 .setMimeType(ContentService.MimeType.JSON);
         }
 
-        // Define specific headers
-        const headers = ['id', 'name', 'value', 'rate', 'type', 'category', 'date'];
+        // Define specific headers including new liquid fields
+        const headers = ['id', 'name', 'value', 'rate', 'type', 'category', 'percentLiquid', 'absoluteLiquid', 'date'];
 
         // Prepare rows
         const rows = items.map(item => headers.map(h => item[h]));
