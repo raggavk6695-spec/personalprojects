@@ -36,8 +36,10 @@ function doPost(e) {
                 .setMimeType(ContentService.MimeType.JSON);
         }
 
-        // Define specific headers including new liquid fields
-        const headers = ['id', 'name', 'value', 'rate', 'type', 'category', 'percentLiquid', 'absoluteLiquid', 'date'];
+        // Collect all distinct keys dynamically to support all properties (e.g. liquidity, compoundingFreq, showInSim)
+        const headerSet = new Set();
+        items.forEach(item => Object.keys(item).forEach(k => headerSet.add(k)));
+        const headers = Array.from(headerSet);
 
         // Prepare rows
         const rows = items.map(item => headers.map(h => item[h]));
